@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 19:35:06 by hponcet           #+#    #+#             */
-/*   Updated: 2016/03/31 15:06:06 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/03/31 19:22:58 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ void				ms_get_env(char **env);
 
 int					ms_exec(char *buf, char **env);
 char				*ms_search_bin(char *cmd);
-
+void				ms_exec_bin(char **cmd, char *pathbin, char **env);
 #endif
