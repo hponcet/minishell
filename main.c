@@ -6,11 +6,11 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 10:55:44 by hponcet           #+#    #+#             */
-/*   Updated: 2016/03/30 17:57:41 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/03/31 15:03:18 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "includes/ms_minishell.h"
 
 int		main(int ac, char **av, char **env)
 {
@@ -21,9 +21,9 @@ int		main(int ac, char **av, char **env)
 	av = NULL;
 	ms_name = ft_strdup("ms$> ");
 	ft_putstr(ms_name);
-	while (get_next_line(0, &buf) > 0)
+	while (get_next_line(0, &buf) >= 0)
 	{
-		ms_get_cmd(buf, env);
+		ms_exec(buf, env);
 		ft_putstr(ms_name);
 	}
 	return (1);

@@ -6,11 +6,11 @@
 /*   By: hponcet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/13 17:59:47 by hponcet           #+#    #+#             */
-/*   Updated: 2016/03/30 14:49:01 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/03/31 08:06:31 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "includes/get_next_line.h"
 #include <fcntl.h>
 
 int		get_next_line(int const fd, char **line)
@@ -19,15 +19,13 @@ int		get_next_line(int const fd, char **line)
 	int			eof;
 	static char	*afternext;
 
-	if (fd < 0 || fd > 255 || fd == 1)
-		return (-1);
 	buf = ft_strnew(BUFF_SIZE + 1);
 	line[0] = ft_strnew(0);
 	if (ft_afternext(&afternext, line) > 0)
 		return (1);
 	while ((read(fd, buf, BUFF_SIZE)) > 0)
 	{
-		if ((eof = ft_cindex(buf, ';')) >= 0)
+		if ((eof = ft_cindex(buf, '\n')) >= 0)
 		{
 			ft_tormoilzboub(buf, eof, line, &(afternext));
 			return (1);
@@ -49,7 +47,7 @@ int		ft_afternext(char **afternext, char **line)
 
 	if (*afternext != NULL)
 	{
-		i = ft_cindex(*afternext, ';');
+		i = ft_cindex(*afternext, '\n');
 		if (i >= 0)
 		{
 			line[0] = ft_strsub(*afternext, 0, i);
