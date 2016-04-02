@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_get_cmd.c                                       :+:      :+:    :+:   */
+/*   ms_get.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 11:27:06 by hponcet           #+#    #+#             */
-/*   Updated: 2016/03/31 15:03:51 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/02 15:11:23 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ms_get_nbc(char *buf)
 {
 	size_t	count;
 	size_t	i;
-	
+
 	count = 0;
 	i = 0;
 	while (buf[i])
@@ -65,21 +65,117 @@ char	**ms_get_cmd(char *buf)
 	return (cmd);
 }
 
-void		ms_get_env(char **env)
+t_env		*ms_get_env(char **env)
+{
+	int		i;
+	t_env	*list;
+	t_env	*tmp;
+	t_env	*ret;
+
+	i = 0;
+	ret = NULL;
+	while (env[i])
+	{
+		if (!(list = (t_env*)malloc(sizeof(t_env))))
+			return (NULL);
+		list->value = ft_strdup(env[i]);
+		list->next = NULL;
+		if (!ret)
+			ret = list;
+		else
+		{
+			tmp = ret;
+			while (tmp->next != NULL)
+				tmp = tmp->next;
+			tmp->next = list;
+		}
+		i++;
+	}
+	return (ret);
+}
+
+char		**ms_convert_env(t_env *env)
+{
+	size_t		i;
+	char	**ret;
+	t_env	*tmp;
+
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	ret = (char**)malloc(sizeof(char*) * i + 1);
+	ret[i] = NULL;
+	i = 0;
+	while (tmp)
+	{
+		ret[i] = ft_strdup(tmp->value);
+		i++;
+		tmp = tmp->next;
+	}
+	return (ret);
+}
+
+char		**ms_get_path(t_env *env)
+{
+	t_env	*tmp;
+	char	**path;
+
+	path = NULL;
+	tmp = env;
+	while (tmp && ft_strncmp(tmp->value, "PATH=", 5) != 0)
+		tmp = tmp->next;
+	if (tmp && ft_strncmp(tmp->value, "PATH=", 5) == 0)
+		path = ft_strsplit(tmp->value + 5, ':');
+	return (path);
+}
+
+void		ms_free_tab(char **tab)
 {
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (tab[i])
 	{
-		if (ft_strncmp(env[i], "PATH", 4) == 0)
-			g_env.path = ft_strsplit(env[i] + 5, ':');
-		else if (ft_strncmp(env[i], "HOME", 4) == 0)
-			g_env.home = ft_strdup(env[i] + 5);
-		else if (ft_strncmp(env[i], "USER", 4) == 0)
-			g_env.user = ft_strdup(env[i] + 5);
-		else if (ft_strncmp(env[i], "PWD", 3) == 0)
-			g_env.pwd = ft_strdup(env[i] + 4);
+		free(tab[i]);
 		i++;
 	}
+	while (i >= 0)
+		tab[--i] = NULL;
+	free(tab);
+	tab = NULL;
+}
+
+void		ms_free_env(t_env *env)
+{
+	while (env)
+	{
+		free(env->value);
+		env->value = NULL;
+		env = env->next;
+	}
+}
+
+char		**ms_copy_tab(char **tab)
+{
+	char	**ret;
+	int		i;
+
+	ret = NULL;
+	i = 0;
+	while (tab[i])
+		i++;
+	if (!(ret = (char**)malloc(sizeof(char*) * i + 1)))
+		return (NULL);
+	ret[i] = NULL;
+	i = 0;
+	while (tab[i])
+	{
+		ret[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	return (ret);
 }
