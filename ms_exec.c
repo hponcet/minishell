@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 07:24:49 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/02 18:48:58 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/03 13:16:19 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void		ms_exec(char **cmd, t_env *env)
 	i = 0;
 	if (ms_search_builtin_cmd(cmd, env) > 0)
 		return ;
-	DEBUG
 	if ((pathbin = ms_search_bin(cmd[0], env)) != NULL)
 		ms_exec_bin(cmd, pathbin, env);
 	else
@@ -71,16 +70,14 @@ void		ms_exec_bin(char **cmd, char *pathbin, t_env *env)
 	if (pid == 0)
 		execve(pathbin, cmd, lenv);
 	ms_free_tab(lenv);
-	ms_free_env(env);
+	ms_free_env(&env);
 }
 
 int			ms_search_builtin_cmd(char **cmd, t_env *env)
 {
 	if (ft_strcmp(cmd[0], "env") == 0)
 	{
-		DEBUG
 		ms_builtin_env(cmd, &env);
-		DEBUG
 		return (1);
 	}
 /*	else if (ft_strcmp(cmd[0], "setenv") == 0)
@@ -97,7 +94,7 @@ int			ms_search_builtin_cmd(char **cmd, t_env *env)
 		ms_builtin_cd(cmd);
 		return (1)
 	}*/
-	else if (ft_strcmp(cmd[0], "exit") == 0)
+	else if (ft_strcmp(cmd[0], "exit") == 0 || ft_strcmp(cmd[0], ":q") == 0)
 		exit(0);
 
 	return (0);
