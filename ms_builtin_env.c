@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 08:09:30 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/03 14:40:12 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/03 22:32:12 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	**ms_builtin_env_opt_u_exec(char **cmd, t_env **env)
 		prev = tmp;
 		tmp = tmp->next;
 	}
+	cmd = ms_del_cmd(cmd, 1);
 	return (cmd);
 }
 

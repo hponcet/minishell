@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 12:48:34 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/03 14:04:36 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/03 22:22:00 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@
 ** Name of prompt shell
 ** ********************
 */
-# define __PROMPT_NAME__ "minishell"
+# define __PROMPT_NAME__ "Minishɘll"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 11:27:06 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/03 12:46:42 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/03 22:29:01 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,16 +125,16 @@ char		**ms_get_path(t_env *env)
 	char	**path;
 
 	path = NULL;
-	if (!env)
-	{
-		path = ft_strsplit(__DEFAULT_PATH__, ':');
-		return (path);
-	}
 	tmp = env;
 	while (tmp && ft_strncmp(tmp->value, "PATH=", 5) != 0)
 		tmp = tmp->next;
 	if (tmp && ft_strncmp(tmp->value, "PATH=", 5) == 0)
 		path = ft_strsplit(tmp->value + 5, ':');
+	if (!path)
+	{
+		path = ft_strsplit(__DEFAULT_PATH__, ':');
+		return (path);
+	}
 	return (path);
 }
 
