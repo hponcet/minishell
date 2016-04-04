@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 07:24:49 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/03 13:16:19 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/04 14:17:37 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void		ms_exec(char **cmd, t_env *env)
 	int		i;
 
 	i = 0;
+	if (!cmd || !cmd[0])
+		return ;
 	if (ms_search_builtin_cmd(cmd, env) > 0)
 		return ;
 	if ((pathbin = ms_search_bin(cmd[0], env)) != NULL)

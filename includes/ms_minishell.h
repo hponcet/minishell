@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 19:35:06 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/04 13:04:49 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/04 14:28:19 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct		s_env
 	char			*value;
 	struct s_env	*next;
 }					t_env;
+
+char				*ms_shell_name(void);
 
 int					ms_get_nbc(char *buf);
 t_env				*ms_get_env(char **env);
