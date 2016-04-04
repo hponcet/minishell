@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 08:09:30 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/04 14:00:31 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/04 19:20:39 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ void	ms_builtin_env(char **cmd, t_env **env)
 	}
 	while (cmd && cmd[0])
 	{
-		if (cmd[0][0] == '-')
+		if (cmd && cmd[0][0] == '-')
 		{
 			cmd[0] = ft_strcut(cmd[0], 1);
 			cmd = ms_builtin_env_opt(cmd, env);
 		}
 
-		if (ft_cindex(cmd[0], '=') > -1)
+			DEBUG
+		if (cmd && ft_cindex(cmd[0], '=') > -1)
 		{
 			cmd = ms_builtin_setenv(cmd, env);
 			break ;
