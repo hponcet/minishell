@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 08:09:30 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/03 22:32:12 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/04 13:51:59 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,70 @@ void	ms_builtin_env(char **cmd, t_env **env)
 		ms_print_env(env);
 		return;
 	}
-	while (cmd && cmd[0] && (cmd[0][0] == '-' || ft_cindex(cmd[0], '=') > -1))
+	while (cmd && cmd[0])
 	{
-		cmd[0] = ft_strcut(cmd[0], 1);
-		cmd = ms_builtin_env_opt(cmd, env);
+		if (cmd[0][0] == '-')
+		{
+			cmd[0] = ft_strcut(cmd[0], 1);
+			cmd = ms_builtin_env_opt(cmd, env);
+		}
+
+		if (ft_cindex(cmd[0], '=') > -1)
+		{
+			cmd = ms_builtin_setenv(cmd, env);
+			break ;
+		}
 	}
 	if (cmd)
 		ms_exec(cmd, *env);
 	else
 		ms_print_env(env);
+}
+
+char	**ms_builtin_setenv(char **cmd, t_env **env)
+{
+	t_env	*tmp;
+	t_env	*list;
+	int		i;
+
+	if (cmd[0][0] == '=' && cmd[0][1] != '\0')
+	{
+		cmd[0] = ft_strcut(cmd[0], 1);
+		return (cmd);
+	}
+	if (cmd[0][0] == '=' && cmd[0][1] == '\0')
+	{
+		ft_printf("env: setenv =: Invalid argument\n");
+		cmd = ms_free_tab(cmd);
+		ms_free_env(env);
+		return (cmd);
+	}
+	i = ft_cindex(cmd[0], '=');
+	if (!(list = (t_env*)malloc(sizeof(t_env))))
+		return (NULL);
+	list->value = ft_strdup(cmd[0]);
+	list->next = NULL;
+	tmp = *env;
+	if (!tmp)
+	{
+		*env = list;
+		cmd = ms_del_cmd(cmd, 1);
+		return (cmd);
+	}
+	while (tmp->next)
+	{
+		if (ft_strncmp(cmd[0], tmp->value, i) == 0 && tmp->value[i] == '=')
+		{
+			free(tmp->value);
+			tmp->value = ft_strdup(cmd[0]);
+			cmd = ms_del_cmd(cmd, 1);
+			return (cmd);
+		}
+		tmp = tmp->next;
+	}
+	tmp->next = list;
+	cmd = ms_del_cmd(cmd, 1);
+	return (cmd);
 }
 
 char	**ms_builtin_env_opt(char **cmd, t_env **env)
