@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 12:48:34 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/04 15:44:39 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/05 18:46:43 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 ** paths are required.
 */
 # define __DEFAULT_PATH__ "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+/* ***************************
+** Default path if env is NULL
+** ***************************
+** In this case, separate paths with ':' if some
+** paths are required.
+*/
+# define __DEFAULT_HOME__ ""
 
 /* ********************
 ** Name of prompt shell

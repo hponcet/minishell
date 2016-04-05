@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 11:27:06 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/03 22:29:01 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/05 17:54:58 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ t_env		*ms_get_env(char **env)
 
 	i = 0;
 	ret = NULL;
+	if (!env || !env[0] || !env[0][0])
+		return (NULL);
 	while (env[i])
 	{
 		if (!(list = (t_env*)malloc(sizeof(t_env))))
@@ -110,6 +112,7 @@ char		**ms_convert_env(t_env *env)
 	ret = (char**)malloc(sizeof(char*) * i + 1);
 	ret[i] = NULL;
 	i = 0;
+	tmp = env;
 	while (tmp)
 	{
 		ret[i] = ft_strdup(tmp->value);

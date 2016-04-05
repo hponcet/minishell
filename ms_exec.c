@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 07:24:49 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/04 19:21:59 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/05 18:48:37 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char		*ms_search_bin(char *cmd, t_env *env)
 	char	**path;
 
 	i = 0;
+	if (cmd[0] == '/')
+		return (cmd);
 	path = ms_get_path(env);
 	while (path[i])
 	{
@@ -82,13 +84,29 @@ int			ms_search_builtin_cmd(char **cmd, t_env *env)
 		ms_builtin_env(cmd, &env);
 		return (1);
 	}
+	if (ft_strcmp(cmd[0], "setenv") == 0)
+	{
+		cmd = ms_del_cmd(cmd, 1);
+		ms_free_env(&env);
+		if (cmd)
+			ms_builtin_setenv(cmd, &g_env);
+		return (1);
+	}
+	if (ft_strcmp(cmd[0], "unsetenv") == 0)
+	{
+		cmd = ms_del_cmd(cmd, 1);
+		ms_free_env(&env);
+		if (cmd && g_env)
+			ms_builtin_env_opt_u_exec(cmd, &g_env);
+		return (1);
+	}
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 	{
-		ms_builtin_cd(cmd);
+		if (cmd && env)
+			ms_builtin_cd(cmd, env);
 		return (1);
 	}
 	else if (ft_strcmp(cmd[0], "exit") == 0 || ft_strcmp(cmd[0], ":q") == 0)
 		exit(0);
-
 	return (0);
 }

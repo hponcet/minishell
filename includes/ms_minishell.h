@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 19:35:06 by hponcet           #+#    #+#             */
-/*   Updated: 2016/04/04 14:28:19 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/04/05 18:42:48 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
+t_env				*g_env;
+
 char				*ms_shell_name(void);
+t_env				*ms_copy_env(t_env *env);
 
 int					ms_get_nbc(char *buf);
 t_env				*ms_get_env(char **env);
@@ -48,5 +51,8 @@ char				**ms_builtin_env_opt_u_exec(char **cmd, t_env **env);
 char				**ms_builtin_setenv(char **cmd, t_env **env);
 char				**ms_del_cmd(char **cmd, int l);
 void				ms_print_env(t_env **env);
+
+void				ms_builtin_cd(char **cmd, t_env *env);
+char				*ms_get_home(t_env *env);
 
 #endif
